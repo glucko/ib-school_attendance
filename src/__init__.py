@@ -16,6 +16,12 @@ def index():
     return "hello"
 
 @app.route('geturl/<int:id>', methods=['GET'])
-def getqr()
+def getqr(id):
+    pass
+
+@app.route('sigin/<int:id>', methods=['POST'])
+def signin(id):
+    pass
+
 if __name__ == "__main__":
         app.run(debug=True)
