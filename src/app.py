@@ -1,3 +1,8 @@
+from .__init__ import app
+@app.route("/")
+def index():
+    return "hello"
+
 @app.route('/api/getqr/<int:id>', methods=['GET'])
 def get_qr(id):
     pass

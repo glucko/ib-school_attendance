@@ -1,6 +1,6 @@
 import click
 from flask.cli import with_appcontext
-from models import User, db
+from .models import Student, Date, db
 
 
 @click.command(name="createdb")
@@ -13,9 +13,19 @@ def create_db():
 @click.command(name="printdb")
 @with_appcontext
 def print_db():
-    users = User.query.all()
+    users = Student.query.all()
 
     for user in users:
-        print(user.email, user.saved_posts)
-        for course in user.created_posts:
-            print(course.name)
+        print(user.name, user.dates)
+        for date in user.dates:
+            print(date.date)
+
+@click.command(name="addstudent")
+@with_appcontext
+def add_student():
+    student = Student(name="John smith", email="john.2@bubba.com")
+    date = Date()
+    student.dates.append(date)
+    db.session.add(student)
+    db.session.commit()
+    print("Student added")
