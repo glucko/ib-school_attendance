@@ -1,12 +1,11 @@
 from .__init__ import app
-@app.route("/")
+from flask import request, render_template
+
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    return "hello"
-
-@app.route('/api/getqr/<int:id>', methods=['GET'])
-def get_qr(id):
-    pass
-
-@app.route('/api/signin/<int:id>', methods=['POST'])
-def signin(id):
-    pass
+    if request.method == 'GET':
+        return render_template("index.html")
+    elif request.method == 'POST':
+        id = request.form['id']
+        print(id)
+        return 200
