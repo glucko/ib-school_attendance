@@ -16,16 +16,24 @@ def print_db():
     users = Student.query.all()
 
     for user in users:
-        print(user.name, user.dates)
+        print(user.id, user.name, user.dates)
         for date in user.dates:
             print(date.date)
 
 @click.command(name="addstudent")
+@click.argument("name")
 @with_appcontext
-def add_student():
-    student = Student(name="John smith", email="john.2@bubba.com")
-    date = Date()
-    student.dates.append(date)
+def add_student(name):
+    student = Student(name=name)
     db.session.add(student)
     db.session.commit()
     print("Student added")
+
+@click.command(name="cleardb")
+@with_appcontext
+def clear_data(session):
+    meta = db.metadata
+    for table in reversed(meta.sorted_tables):
+        print 'Clear table %s' % table
+        session.execute(table.delete())
+    session.commit()
